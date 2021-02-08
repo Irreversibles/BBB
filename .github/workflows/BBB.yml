@@ -29,7 +29,7 @@ jobs:
           npm install
 
       - name: '运行 【步步寶】'
-        if: env.RONGHUA_VIDEO
+        if: env.BBB_COOKIE
         run: |
           node BBB.js
         env:
