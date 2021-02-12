@@ -1,54 +1,7 @@
-/* ziye 
-github地址 https://github.com/ziye12
-TG频道地址  https://t.me/ziyescript
-TG交流群   https://t.me/joinchat/AAAAAE7XHm-q1-7Np-tF3g
-boxjs链接  https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/ziye.boxjs.json
-
-转载请备注个名字，谢谢
-⚠️多看点APP
-请点击前往下载  http://dkd-api.dysdk.com/share.html?uid=13209201
-或者自行下载    邀请码13209201 谢谢支持
-
-2.9 制作
-2.10 增加看视频，基本完善
-2.11 完善判定
-
-⚠️一共1个位置 1个ck  👉 2条 Secrets
-多账号换行
-
-第一步 添加  hostname=dkd-api.dysdk.com,
-
-第二步 添加body重写 
-
-登录多看点APP  点击  我的  获取ck
-刷视频获取body，一个body一天可以只领取两次奖励
-
-duokandianbodyVal 👉DKD_duokandianBODY
-duokandianvideobodyVal 👉DKD_duokandianvideoBODY
-
-提现标准 可设置 0 1 3 5 15 50
-duokandianCASH 👉DKD_duokandianCASH
-
-⚠️主机名以及重写👇
-hostname=dkd-api.dysdk.com,
-
-############## 圈x
-#多看点APP获取body
-http:\/\/dkd-api\.dysdk\.com\/* url script-request-body https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/duokandian.js   
-
-############## loon
-http-request http:\/\/dkd-api\.dysdk\.com\/* script-path=https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/duokandian.js,requires-body=1,max-size=0, tag=多看点APP获取body
-
-############## surge
-多看点APP获取body = type=http-request,pattern=http:\/\/dkd-api\.dysdk\.com\*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/main/Task/duokandian.js 
-*/
-
-
-
 const $ = Env("多看点APP");
 $.idx = ($.idx = ($.getval('duokandianSuffix') || '1') - 1) > 0 ? ($.idx + 1 + '') : ''; // 账号扩展字符
 const notify = $.isNode() ? require("./sendNotify") : ``;
-const COOKIE = $.isNode() ? require("./duokandianCOOKIE") : ``;
+const COOKIE = $.isNode() ? require("./dkdCOOKIE") : ``;
 const logs = 0; // 0为关闭日志，1为开启
 const notifyttt = 1 // 0为关闭外部推送，1为12 23 点外部推送
 const notifyInterval = 2; // 0为关闭通知，1为所有通知，2为12 23 点通知  ， 3为 6 12 18 23 点通知 
@@ -72,7 +25,7 @@ duokandianheaderVal = {
 };
 if ($.isNode()) {
     // 没有设置 DKD_duokandianCASH 则默认为 0 不提现
-    CASH = process.env.XP_CASH || 0;
+    CASH = process.env.XP_CASH || 5;
 }
 if ($.isNode() && process.env.DKD_duokandianHEADER) {
     COOKIES_SPLIT = process.env.COOKIES_SPLIT || "\n";
