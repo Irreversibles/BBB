@@ -1,0 +1,32 @@
+ name: ranlv
+
+ on:
+   workflow_dispatch:
+   schedule:
+      - cron: '1,30 2-12 * * *'
+   watch:
+     types: started
+   repository_dispatch:
+     types: _
+
+ jobs:
+   build:
+     runs-on: ubuntu-latest
+     if: github.event.repository.owner.id == github.event.sender.id
+     steps:
+       - name: Checkout
+         uses: actions/checkout@v2
+       - name: Use Node.js 12.x
+         uses: actions/setup-node@v1
+         with:
+           node-version: 12.x
+       - name: npm install
+         run: |
+           npm install
+       - name: '运行 【燃旅视频】'
+         run: |
+           node ranlv.js
+           
+         env:
+           RLURL: ${{ secrets.RLURL }}
+           RLHEADER: ${{ secrets.RLHEADER }}
