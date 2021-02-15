@@ -5,8 +5,8 @@ const notify = $.isNode() ?require('./sendNotify') : '';
 let status, videoid,myid;
 status = (status = ($.getval("rlstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符
 const rlurlArr = [], rlheaderArr = [],rlbodyArr = []
-let rlurl = $.getdata('rlurl')
-let rlheader = $.getdata('rlheader')
+let rlurl = $.getdata('rlurl') || process.env.RLURL
+let rlheader = $.getdata('rlheader') || process.env.RLHEADER
 let rlbody = $.getdata('rlbody')
 let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
 const invite=1;//新用户自动邀请，0关闭，1默认开启
