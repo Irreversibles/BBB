@@ -7,6 +7,12 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '10 */1 * * *' # UTC时间 +8 北京
+
+   watch:
+     types: started
+   repository_dispatch:
+     types: _
+
   jobs:
    build:
      runs-on: ubuntu-latest
