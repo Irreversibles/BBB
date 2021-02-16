@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Checkout
         run: |
-          git clone https://github.com/ziye66666/JavaScript.git ~/JavaScript
+          git clone https://github.com/Irreversibles/BD.git ~/BD
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -32,12 +32,12 @@ jobs:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }} # 使用 package-lock.json 的 Hash 作为缓存的 key。也可以使用 package.json 代替
       - name: npm install
         run: |
-          cd ~/JavaScript
+          cd ~/BD
           git checkout main
           npm install
       - name: '运行 【芝嫲视频】'
         run: |
-          cd ~/JavaScript/Task
+          cd ~/BD/node
           node zhima.js
         env:
           TZ: Asia/shanghai
