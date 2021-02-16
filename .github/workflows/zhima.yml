@@ -29,7 +29,7 @@ on:
            npm install
        - name: '运行 【芝嫲视频】'
          run: |
-           node zhima.js
+           node node/zhima.js
         env:
           TZ: Asia/shanghai
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
