@@ -1,4 +1,4 @@
-name: ranlv
+name: rl
 
 
 on:
@@ -26,7 +26,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【ranlv】'
+      - name: '运行 【rl】'
         if: env.RLHEADER
         run: |
           node node/rl.js
