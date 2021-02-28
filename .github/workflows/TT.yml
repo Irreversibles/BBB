@@ -5,47 +5,50 @@ name: TT语音
 
 on:
   workflow_dispatch:
-  # 账号越多文章越多，运行一次消耗的时间也越长，文章和视频不要一块运行，cron自己看着写
   schedule:
-     - cron: '0 0-16/2 * * *'
-  watch:
-    types: started
-#env:
-  #TZ: Asia/Shanghai
-
+    - cron: '30 23 * * *'
+  # watch:
+  #       types: started
+  # repository_dispatch:
+  #   types: jd_cash
 jobs:
   build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
     env:
-      TTREFER : ${{ secrets.TTREFER  }}
+      URL: "https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/TT.js"
+      RUNFILE: "Task/TT.js"      
+      TTREFER: ${{ secrets.TTREFER }}
       TTBODY: ${{ secrets.TTBODY }}
       PUSH_KEY: ${{ secrets.PUSH_KEY }}
       BARK_PUSH: ${{ secrets.BARK_PUSH }}
+      BARK_SOUND: ${{ secrets.BARK_SOUND }}
       TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
       TG_USER_ID: ${{ secrets.TG_USER_ID }}
-      BARK_SOUND: ${{ secrets.BARK_SOUND }}
       DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
       DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-
-
-    runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
+      IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
     steps:
       - name: Checkout
-        run: |
-          git clone https://github.com/Irreversibles/BD.git ~/BD
-      - name: Use Node.js 12.x
+        uses: actions/checkout@v2
+        #with:
+        #  repository: Sunert/Scripts
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
-      - name: npm install
-        run: |
-          cd ~/BD
-          npm install -g npm
-          npm update
-      - name: '运行 【TT语音1】'
-        run: |
-          cd ~/BD
-          node node/TT.js
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        uses: actions/cache@v2 # 使用 GitHub 官方的缓存 Action。
         env:
-          TTREFER: ${{ secrets.TTREFER }}
-          TTBODY: ${{ secrets.TTBODY }}
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }} # 使用 package-lock.json 的 Hash 作为缓存的 key。也可以使用 package.json 代替
+      - name: npm install
+        #if: env.RLHEADER
+        run: |
+          npm install
+      - name: '运行 【TT语音】'
+        #if: env.RLHEADER
+        run: |
+          node Task/TT.js
