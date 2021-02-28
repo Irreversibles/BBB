@@ -39,7 +39,7 @@ jobs:
           node-version: 12.x
       - name: npm install
         run: |
-          cd ~/node
+          cd ~/BD
           npm install -g npm
           npm update
       - name: '运行 【TT语音1】'
