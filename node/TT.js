@@ -71,6 +71,16 @@ if ($.isNode()) {
   } else {
    TTbody= process.env.TTBODY.split()
   };
+  Object.keys(TTrefer).forEach((item) => {
+        if (TTrefer[item]) {
+          TTreferArr.push(TTrefer[item])
+        }
+    });
+  Object.keys(TTbody).forEach((item) => {
+        if (TTbody[item]) {
+          TTbodyArr.push(TTbody[item])
+        }
+    });
     console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
     console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
  } else {
@@ -88,17 +98,20 @@ if (!TTreferArr[0] && !TTbodyArr[0] ) {
     return;
   }
    console.log(`------------- 共${TTbodyArr.length}个账号----------------\n`)
+  message = ''
   for (let i = 0; i < TTbodyArr.length; i++) {
     if (TTbodyArr[i]) {
-      message = ''
+      
       TTrefer= TTreferArr[i];
       TTbody = TTbodyArr[i];
       $.index = i + 1;
       console.log(`\n开始【TT语音${$.index}】`)
+      message += `\n开始【TT语音${$.index}】`
       await checkin() 
-      await showmsg()
+      //await showmsg()
   }
  }
+ await showmsg()
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
@@ -129,7 +142,7 @@ async function checkin(){
        'Content-Type': 'application/json',
        'Host': 'node.52tt.com',
        'Origin': 'http://appcdn.52tt.com',
-       'Refer': `${TTrefer}`,
+        Refer: TTrefer,
        'User-Agent': `Mozilla/5.0 (iPhone; CPU iPhone OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 TT/5.5.6 NetType/Wifi`
        },
     	body: TTbody
@@ -142,8 +155,8 @@ async function checkin(){
          for(let i = 0; i < 29; i++){
          let day = result.data.record.i == 0 ? (i -1) : i
          }
-	  console.log(`打卡成功：累计获得${result.data.curMoney}元\n`)
-          message += `打卡成功：累计获得${result.data.curMoney}元`
+	  console.log(`打卡成功：获得${result.data.curMoney}元\n`)
+          message += `打卡成功：获得${result.data.curMoney}元`
         }else if(result.code == 2){
         console.log(result.msg+`\n`)
         message += result.msg
