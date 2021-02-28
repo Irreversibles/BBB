@@ -17,7 +17,7 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
     env:
       URL: "https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/TT.js"
-      RUNFILE: "Task/TT.js"      
+      RUNFILE: "node/TT.js"      
       TTREFER: ${{ secrets.TTREFER }}
       TTBODY: ${{ secrets.TTBODY }}
       PUSH_KEY: ${{ secrets.PUSH_KEY }}
