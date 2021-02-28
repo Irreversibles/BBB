@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-      URL: "https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/TT.js"
+      URL: "https://raw.githubusercontent.com/Irreversibles/BD/main/node/TT.js"
       RUNFILE: "node/TT.js"      
       TTREFER: ${{ secrets.TTREFER }}
       TTBODY: ${{ secrets.TTBODY }}
